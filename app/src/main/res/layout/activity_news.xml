@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="echonest.sociogram.connectus.newsActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="World's News "
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="@color/green"
+        android:id="@+id/app_title"/>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:id="@+id/horizontal_news_button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:queryHint="Search news"
+                app:queryBackground="@color/black"
+                app:searchHintIcon="@color/black"
+
+                android:layout_gravity="center"
+                android:id="@+id/search_viewNews"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:id="@+id/btn_1news"
+                android:layout_margin="6dp"
+                android:text="GENERAL"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_2news"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:layout_margin="6dp"
+                android:text="BUSINESS"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_3news"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:layout_margin="6dp"
+                android:text="SPORTS"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_4news"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:layout_margin="6dp"
+                android:text="TECHNOLOGY"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_5news"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:layout_margin="6dp"
+                android:text="HEALTH"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_6news"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:layout_margin="6dp"
+                android:text="ENTERTAINMENT"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/bar"
+                android:textColor="@color/white"
+                android:id="@+id/btn_7news"
+                android:layout_margin="6dp"
+                android:text="SCIENCE"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:id="@+id/progress_bar"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newsRecyclerView"/>
+
+</LinearLayout>

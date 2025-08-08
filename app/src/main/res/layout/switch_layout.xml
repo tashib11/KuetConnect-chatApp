@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/nav_dark_mode_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:thumbTint="#1A86E1"
+        app:trackTint="@color/dark_gray" />
+</LinearLayout>

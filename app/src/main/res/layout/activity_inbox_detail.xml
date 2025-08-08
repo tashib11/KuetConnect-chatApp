@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blacklight"
+    tools:context="echonest.sociogram.connectus.inboxDetailActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Cover Image -->
+            <ImageView
+                android:id="@+id/coverIv"
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:scaleType="fitXY"
+                android:background="#3F2967" />
+
+            <!-- Profile Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="100dp">
+
+                <!-- Profile Avatar -->
+                <ImageView
+                    android:id="@+id/avatarIv"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="#3F2967"
+                    android:scaleType="fitXY"
+                    app:civ_border_color="#3F2967" />
+
+                <!-- Profile Details -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#77000000">
+
+                    <TextView
+                        android:id="@+id/nameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/emailTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/professionTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Options Section -->
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/optionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="350dp"
+        android:background="@drawable/rounded_button"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Dark Mode Switch and Text -->
+        <!-- Dark Mode Section -->
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:orientation="vertical"-->
+        <!--                    android:gravity="center_horizontal"-->
+        <!--                    android:padding="16dp"-->
+        <!--                    android:background="@drawable/rounded_background">-->
+
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/darkModeTitle"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:layout_marginBottom="12dp"-->
+        <!--                        android:text="Dark Mode"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="18sp"-->
+        <!--                        android:textStyle="bold"-->
+        <!--                        android:gravity="center" />-->
+
+        <!--                    <Switch-->
+        <!--                        android:id="@+id/darkModeSwitch"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:trackTint="@color/white"-->
+        <!--                        android:thumbTint="@color/black"-->
+        <!--                        android:checked="true"-->
+        <!--                        android:layout_marginBottom="8dp" />-->
+
+        <!--                    <TextView-->
+        <!--                        android:id="@+id/darkModeStatus"-->
+        <!--                        android:layout_width="wrap_content"-->
+        <!--                        android:layout_height="wrap_content"-->
+        <!--                        android:text="Enabled"-->
+        <!--                        android:textColor="@color/white"-->
+        <!--                        android:textSize="16sp"-->
+        <!--                        android:layout_marginTop="8dp"-->
+        <!--                        android:gravity="center" />-->
+        <!--                </LinearLayout>-->
+
+        <!-- Options Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!-- Block/Unblock Button -->
+            <Button
+                android:id="@+id/blockButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/black"
+                android:elevation="4dp"
+                android:text="Unblock"
+                android:textColor="@color/white" />
+
+            <!-- Delete Conversation Button -->
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/black"
+                android:elevation="4dp"
+                android:text="Delete Conversation"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

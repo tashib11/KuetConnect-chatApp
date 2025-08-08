@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="echonest.sociogram.connectus.SignInActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Logo Image -->
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/app" />
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:background="#ddd"
+            android:textColor="@color/black"
+            android:textColorHint="#505E64"
+            android:textCursorDrawable="@android:color/black" />
+
+        <!-- Password Input with TextInputLayout -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/bar"
+            app:boxStrokeColor="@color/black"
+            app:hintTextColor="@color/black"
+            app:passwordToggleTint="@color/black"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:background="#ddd"
+
+                android:textColor="@color/black"
+                android:textColorHint="@color/bar"
+                android:textCursorDrawable="@android:color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Forgotten Password Link -->
+        <TextView
+            android:id="@+id/recoverPassTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"
+            android:text="Forgotten password"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:paddingEnd="20dp" />
+
+        <!-- Log In Button -->
+        <Button
+            android:id="@+id/btn_signIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:padding="15dp"
+            android:text="Log in"
+            android:backgroundTint="#192022"
+            android:textColor="@color/white"
+            app:cornerRadius="15dp" />
+
+        <!-- Create Account Button -->
+        <Button
+            android:id="@+id/btn_createAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:padding="15dp"
+            android:backgroundTint="#192022"
+            android:text="Create account"
+            android:textColor="@color/white"
+            app:cornerRadius="15dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1090849787908",
+    "firebase_url": "https://patient-e0a4a-default-rtdb.firebaseio.com",
+    "project_id": "patient-e0a4a",
+    "storage_bucket": "patient-e0a4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090849787908:android:22e7966c7fb2bcc78de551",
+        "android_client_info": {
+          "package_name": "com.example.echonest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf5XoTTtcdXo9NAuUQ0w4Z6XuBLSRCNFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090849787908:android:e7f220b807683bd68de551",
+        "android_client_info": {
+          "package_name": "com.tamim.sociogram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf5XoTTtcdXo9NAuUQ0w4Z6XuBLSRCNFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

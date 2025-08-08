@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="end"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="7dp"
+    android:maxWidth="310dp"
+    android:id="@+id/messageLayout">
+
+    <!-- Message Container -->
+    <LinearLayout
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileIv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:src="@drawable/avatar"
+            app:civ_border_color="@null" />
+
+        <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="3dp"
+            android:text="time"
+            android:textColor="@color/green_light"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/messageTv"
+            android:background="@drawable/bg_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:padding="8dp"
+            android:text="Sample Message"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:maxWidth="250dp"
+            android:minWidth="50dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Image Container -->
+    <FrameLayout
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/messageIvImage"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:contentDescription="Image message"
+            android:src="@drawable/baseline_image_24"
+            android:scaleType="centerCrop" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/circular_progress"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+
+        <TextView
+            android:id="@+id/progressPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- Video Container -->
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end">
+
+        <ImageView
+            android:id="@+id/messageVideoThumbnail"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Video thumbnail" />
+
+        <ProgressBar
+            android:id="@+id/videoProgressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/circular_progress"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal" />
+
+        <TextView
+            android:id="@+id/videoProgressPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0%"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/playButtonOverlay"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play_circle"
+            android:contentDescription="Play video" />
+    </FrameLayout>
+
+
+
+
+    <!-- Seen Status -->
+    <TextView
+        android:id="@+id/isSeenTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="Seen"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp" />
+</LinearLayout>

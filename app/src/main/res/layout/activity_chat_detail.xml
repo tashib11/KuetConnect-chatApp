@@ -1,0 +1,188 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#121212"
+    tools:context="echonest.sociogram.connectus.ChatDetailActivity">
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1E1E1E"
+        android:elevation="4dp"
+        android:padding="6dp">
+        <ImageView
+            android:id="@+id/backArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="Back"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="#FFFFFF" />
+        <LinearLayout
+            android:id="@+id/headbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileIv"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/avatar"
+                app:civ_border_color="#4FC3F7"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/nameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Harbul"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/userStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Online"
+                    android:textColor="#B0BEC5"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/settingsbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:contentDescription="Settings"
+                android:src="@drawable/menu_vertical"
+                android:paddingTop="10dp"
+               />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!-- RecyclerView for Chat Messages -->
+
+    <!-- Chat Input Layout -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/chatLayout"
+        android:layout_marginBottom="0dp"
+        android:background="#121212"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:padding="8dp" />
+
+    <RelativeLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#171717"
+        android:padding="2dp">
+
+        <!-- Attachment Buttons -->
+        <LinearLayout
+            android:id="@+id/attachmentLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/attachBtnVideo"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Attach Video"
+                android:src="@drawable/videosend"
+                android:layout_marginEnd="8dp" />
+
+            <ImageView
+                android:id="@+id/attachBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Attach Image"
+                android:src="@drawable/baseline_image_24"
+                app:tint="#4FC3F7"
+                android:layout_marginEnd="8dp" />
+        </LinearLayout>
+
+        <!-- Input and Send Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/attachmentLayout"
+            android:layout_toStartOf="@id/sendbtn"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/messageEt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_et_message"
+                android:hint="Type a message..."
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textColorHint="#B0BEC5"
+                android:inputType="textMultiLine"
+                android:minLines="1"
+                android:maxLines="5"
+                android:scrollbars="vertical"
+                android:gravity="top|start"
+                android:lineSpacingExtra="4dp" />
+
+
+
+        </LinearLayout>
+
+        <!-- Wrap Like and Send Buttons in a container layout -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/likebtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/baseline_emoji_emotions_24"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/sendbtn"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+           android:layout_centerVertical="true"
+            android:contentDescription="Send Message"
+            android:src="@drawable/send"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</RelativeLayout>
