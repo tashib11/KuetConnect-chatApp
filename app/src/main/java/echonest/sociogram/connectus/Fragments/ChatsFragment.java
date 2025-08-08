@@ -1,36 +1,28 @@
 package echonest.sociogram.connectus.Fragments;
+import echonest.sociogram.connectus.RSAUtils;
+import echonest.sociogram.connectus.Adapters.AdapterChatlist;
+import echonest.sociogram.connectus.DecryptionUtils;
+import com.example.connectus.R;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+//import android.widget.SearchView;
+import androidx.appcompat.widget.SearchView;
 
-import echonest.sociogram.connectus.Adapters.AdapterChatlist;
-import echonest.sociogram.connectus.Adapters.AdapterUsers;
-import echonest.sociogram.connectus.DecryptionUtils;
-import echonest.sociogram.connectus.Models.ModelChat;
-import echonest.sociogram.connectus.Models.ModelChatlist;
-import echonest.sociogram.connectus.Models.ModelUser;
-import com.example.connectus.R;
 
-import echonest.sociogram.connectus.RSAUtils;
-import echonest.sociogram.connectus.SignInActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +30,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
 import java.security.PrivateKey;
@@ -46,8 +37,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.crypto.SecretKey;
-
+//import echonest.sociogram.connectus.Adapter.AdapterChatlist; // adjust import if different
+import echonest.sociogram.connectus.Models.ModelChat;
+import echonest.sociogram.connectus.Models.ModelChatlist;
+import echonest.sociogram.connectus.Models.ModelUser;
+//import echonest.sociogram.connectus.R;
+import echonest.sociogram.connectus.SignInActivity;
+//import echonest.sociogram.connectus.utils.DecryptionUtils;
+//import echonest.sociogram.connectus.utils.RSAUtils;
 
 public class ChatsFragment extends Fragment {
     FirebaseAuth firebaseAuth;
@@ -86,8 +83,6 @@ public class ChatsFragment extends Fragment {
 
         // Check if the current user is logged in
         if (currentUser != null) {
-//
-
             // Load chat list
             loadChatList();
         } else {
@@ -96,13 +91,19 @@ public class ChatsFragment extends Fragment {
 
         return view;
     }
+
     private void loadChatList() {
+        if (currentUser == null) return;
         String currentUserId = currentUser.getUid();
         chatListRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(currentUserId);
 
-        chatListListener = chatListRef.addValueEventListener(new ValueEventListener() {
+        // save listener so we can remove it properly later
+        chatListListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Guard: fragment must be attached
+                if (!isAdded() || getContext() == null) return;
+
                 chatlistList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ModelChatlist chatlist = ds.getValue(ModelChatlist.class);
@@ -115,17 +116,24 @@ public class ChatsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-             //   Toast.makeText(getContext(), "Failed to load chat list.", Toast.LENGTH_SHORT).show();
+                // Guard: fragment must be attached
+                if (!isAdded() || getContext() == null) return;
+                // optionally log or show error
             }
-        });
+        };
+
+        chatListRef.addValueEventListener(chatListListener);
     }
 
     private void loadUsers() {
         usersRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        usersListener = usersRef.addValueEventListener(new ValueEventListener() {
+        usersListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Guard
+                if (!isAdded() || getContext() == null) return;
+
                 originalUserList.clear(); // Clear master list before repopulating
                 userList.clear(); // Clear current displayed list
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -146,22 +154,27 @@ public class ChatsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-              //  Toast.makeText(getContext(), "Failed to load users.", Toast.LENGTH_SHORT).show();
+                if (!isAdded() || getContext() == null) return;
             }
-        });
+        };
+
+        usersRef.addValueEventListener(usersListener);
     }
 
     private void loadLastMessages() {
         chatsRef = FirebaseDatabase.getInstance().getReference("Chats");
 
-        chatsListener = chatsRef.addValueEventListener(new ValueEventListener() {
+        chatsListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // IMPORTANT GUARD: if fragment no longer attached, skip work
+                if (!isAdded() || getContext() == null) return;
+
                 HashMap<String, String> lastMessageMap = new HashMap<>();
                 HashMap<String, Long> lastMessageTimestampMap = new HashMap<>();
 
-                // Retrieve the user's private key from SharedPreferences
-                SharedPreferences prefs = requireContext().getSharedPreferences("secure_prefs", Context.MODE_PRIVATE);
+                // Retrieve the user's private key from SharedPreferences (safe: use getContext() after guard)
+                SharedPreferences prefs = getContext().getSharedPreferences("secure_prefs", Context.MODE_PRIVATE);
                 String privateKeyStr = prefs.getString("privateKey", null);
                 PrivateKey privateKey = null;
 
@@ -169,7 +182,9 @@ public class ChatsFragment extends Fragment {
                     try {
                         privateKey = RSAUtils.stringToPrivateKey(privateKeyStr);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        // log and continue with null privateKey
+                        e.printStackTrace();
+                        privateKey = null;
                     }
                 }
 
@@ -196,7 +211,7 @@ public class ChatsFragment extends Fragment {
                                             // Decrypt the message if possible
                                             if (privateKey != null && chat.getAesKey() != null && chat.getMessage() != null) {
                                                 try {
-                                                    SecretKey aesKey = DecryptionUtils.decryptAESKeyWithRSA(chat.getAesKey(), privateKey);
+                                                    javax.crypto.SecretKey aesKey = DecryptionUtils.decryptAESKeyWithRSA(chat.getAesKey(), privateKey);
                                                     lastMessage = DecryptionUtils.decryptAES(chat.getMessage(), aesKey);
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
@@ -207,32 +222,41 @@ public class ChatsFragment extends Fragment {
                                     }
                                 }
 
-                                long timestamp = Long.parseLong(chat.getTimestamp());
-                                lastMessageMap.put(chatPartnerId, lastMessage);
-                                lastMessageTimestampMap.put(chatPartnerId, timestamp);
+                                // safe parse timestamp
+                                try {
+                                    long timestamp = Long.parseLong(chat.getTimestamp());
+                                    lastMessageMap.put(chatPartnerId, lastMessage);
+                                    lastMessageTimestampMap.put(chatPartnerId, timestamp);
+                                } catch (Exception e) {
+                                    // ignore invalid timestamp but still set message
+                                    lastMessageMap.put(chatPartnerId, lastMessage);
+                                }
                             }
                         }
                     }
                 }
 
+                // update adapter safely (adapter uses context passed earlier)
                 adapterChatlist.setLastMessageMap(lastMessageMap);
                 adapterChatlist.setLastMessageTimestampMap(lastMessageTimestampMap);
+                // notify if adapter expects it (if setters don't call notify internally)
+                adapterChatlist.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Toast.makeText(getContext(), "Failed to load last messages.", Toast.LENGTH_SHORT).show();
+                if (!isAdded() || getContext() == null) return;
             }
-        });
+        };
+
+        chatsRef.addValueEventListener(chatsListener);
     }
 
-
-
-
     private void redirectToSignIn() {
+        if (!isAdded()) return;
         Intent intent = new Intent(getActivity(), SignInActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        if (getActivity() != null) getActivity().finish();
     }
 
     @Override
@@ -288,19 +312,20 @@ public class ChatsFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Ensure all listeners are removed
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Ensure all listeners are removed when the view is destroyed
         if (chatListRef != null && chatListListener != null) {
             chatListRef.removeEventListener(chatListListener);
+            chatListListener = null;
         }
         if (usersRef != null && usersListener != null) {
             usersRef.removeEventListener(usersListener);
+            usersListener = null;
         }
         if (chatsRef != null && chatsListener != null) {
             chatsRef.removeEventListener(chatsListener);
+            chatsListener = null;
         }
     }
-
-
 }

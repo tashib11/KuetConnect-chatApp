@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "1090849787908",
-    "firebase_url": "https://patient-e0a4a-default-rtdb.firebaseio.com",
-    "project_id": "patient-e0a4a",
-    "storage_bucket": "patient-e0a4a.appspot.com"
+    "project_number": "536080268590",
+    "firebase_url": "https://sociogram-593af-default-rtdb.firebaseio.com",
+    "project_id": "sociogram-593af",
+    "storage_bucket": "sociogram-593af.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1090849787908:android:22e7966c7fb2bcc78de551",
+        "mobilesdk_app_id": "1:536080268590:android:c5e9fe685c6a86b3ad4ebf",
         "android_client_info": {
           "package_name": "com.example.echonest"
         }
@@ -16,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCf5XoTTtcdXo9NAuUQ0w4Z6XuBLSRCNFQ"
+          "current_key": "AIzaSyC2l1AQ81xrNvVgQ5AQvUAmnzV5atqeKI4"
         }
       ],
       "services": {
@@ -27,7 +27,7 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1090849787908:android:e7f220b807683bd68de551",
+        "mobilesdk_app_id": "1:536080268590:android:db062b06f3e37fafad4ebf",
         "android_client_info": {
           "package_name": "com.tamim.sociogram"
         }
@@ -35,7 +35,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCf5XoTTtcdXo9NAuUQ0w4Z6XuBLSRCNFQ"
+          "current_key": "AIzaSyC2l1AQ81xrNvVgQ5AQvUAmnzV5atqeKI4"
         }
       ],
       "services": {

@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.echonest" />
-                  <option name="mobileSdkAppId" value="1:1090849787908:android:22e7966c7fb2bcc78de551" />
-                  <option name="projectId" value="patient-e0a4a" />
-                  <option name="projectNumber" value="1090849787908" />
+                  <option name="mobileSdkAppId" value="1:536080268590:android:c5e9fe685c6a86b3ad4ebf" />
+                  <option name="projectId" value="sociogram-593af" />
+                  <option name="projectNumber" value="536080268590" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -32,142 +32,142 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PeopleFragment extends Fragment {
 
     FirebaseAuth firebaseAuth;
     AdapterUsers adapterUsers;
     RecyclerView recyclerView;
     List<ModelUser> userList;
+
     public PeopleFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        firebaseAuth= FirebaseAuth.getInstance();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_people, container, false);
-        recyclerView= view.findViewById(R.id.usersRecyclerView);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //init user list
+        View view = inflater.inflate(R.layout.fragment_people, container, false);
+
+        recyclerView = view.findViewById(R.id.usersRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        // init user list and adapter ONCE
         userList = new ArrayList<>();
+        adapterUsers = new AdapterUsers(getActivity(), userList);
+        recyclerView.setAdapter(adapterUsers);
+
+        // load users
         getAllUsers();
-        return  view;
+
+        return view;
     }
 
     private void getAllUsers() {
-        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (fUser == null) {
+            // Not signed in — redirect to sign in safely if fragment attached
+            if (isAdded() && getActivity() != null) {
+                startActivity(new Intent(getActivity(), SignInActivity.class));
+                getActivity().finish();
+            }
+            return;
+        }
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!isAdded()) return; // fragment not attached
+
                 userList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    // Fetch user data
-                    String userId = ds.child("userId").getValue(String.class);
-                    String name = ds.child("name").getValue(String.class);
-                    String email = ds.child("email").getValue(String.class);
-                    String profilePhoto = ds.child("profilePhoto").getValue(String.class);
-                    String coverPhoto = ds.child("coverPhoto").getValue(String.class);
-                    String onlineStatus = ds.child("onlineStatus").getValue(String.class);
-                    String profession = ds.child("profession").getValue(String.class);
-//                    int followerCount = ds.child("followerCount").getValue(Integer.class);
-//                    if (followerCount == null) {
-//                        followerCount = 0; // Default to 0 if it's null
-//                    }
+                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                    if (modelUser == null) continue; // skip nulls
 
-                    // Exclude current user
-                    if (userId != null && !userId.equals(fUser.getUid())) {
-                        ModelUser modelUser = new ModelUser(
-                                coverPhoto, profilePhoto, email, null, null,
-                                userId, name, onlineStatus, profession, 0,null
-                        );
+                    String userId = modelUser.getUserId();
+                    // ensure userId and fUser are non-null before equals
+                    if (userId != null && fUser.getUid() != null && !userId.equals(fUser.getUid())) {
                         userList.add(modelUser);
                     }
                 }
-                // Initialize adapter and set to RecyclerView
-                adapterUsers = new AdapterUsers(getActivity(), userList);
-                recyclerView.setAdapter(adapterUsers);
+
+                // notify adapter once after loop
+                adapterUsers.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
+                // optional: log or show message
             }
         });
     }
 
     private void searchUsers(String query) {
-        //get current user
-        FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
-        //get path of datbase named "Users" containing users info
+        final FirebaseUser fUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (fUser == null) return;
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        // get all data from path
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!isAdded()) return;
+
                 userList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     ModelUser modelUser = ds.getValue(ModelUser.class);
-                    //get all serached users except currently signed in user
-                    if (!modelUser.getUserId().equals(fUser.getUid())) {
-                        if(modelUser.getName().toLowerCase().contains(query.toLowerCase()) ||
-                        modelUser.getEmail().toLowerCase().contains(query.toLowerCase())){
-                            userList.add(modelUser);
-                        }
+                    if (modelUser == null) continue;
+
+                    String uid = modelUser.getUserId();
+                    String name = modelUser.getName();
+                    String email = modelUser.getEmail();
+
+                    // Skip if uid null or is current user
+                    if (uid == null || fUser.getUid() == null || uid.equals(fUser.getUid())) continue;
+
+                    // Null-safe checks for name/email matching
+                    boolean matches = false;
+                    if (name != null && name.toLowerCase().contains(query.toLowerCase())) matches = true;
+                    if (!matches && email != null && email.toLowerCase().contains(query.toLowerCase())) matches = true;
+
+                    if (matches) {
+                        userList.add(modelUser);
                     }
-                    //adapter
-                    adapterUsers = new AdapterUsers(getActivity(), userList);
-                    //refresh adawpter
-                    adapterUsers.notifyDataSetChanged();
-                    //set adapter to recycler view
-                    recyclerView.setAdapter((adapterUsers));
                 }
+                // update adapter once
+                adapterUsers.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 
-    private  void checkUserStatus(){
-        FirebaseUser user= firebaseAuth.getCurrentUser();
-    if(user!=null){
-
-    }else{
-        startActivity(new Intent(getActivity(), SignInActivity.class));
-        getActivity().finish();
-    }
-    }
-
-    public void onCreate(Bundle savedInstanceState){
-        setHasOptionsMenu(true); //to show menu option in fragment
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true); // to show menu in fragment
         super.onCreate(savedInstanceState);
     }
 
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
 
-        // Get the SearchView from the menu item
-        MenuItem menuItem=menu.findItem(R.id.action_search);
-        androidx.appcompat.widget.SearchView searchView=(androidx.appcompat.widget.SearchView) menuItem.getActionView();
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        // use AppCompat SearchView
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
         searchView.setQueryHint("Search by name");
 
-
-        // Set up the query text listener
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                //called when user press search buttpm from  keyboard
-                //if search query os npt empty then search
-                if(!TextUtils.isEmpty(s.trim())){
+                if (!TextUtils.isEmpty(s.trim())) {
                     searchUsers(s);
-                }else{
-                    //search text empty  ,get all users
+                } else {
                     getAllUsers();
                 }
                 return false;
@@ -175,12 +175,9 @@ public class PeopleFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-
-                //if search query os npt empty then search
-                if(!TextUtils.isEmpty(s.trim())){
+                if (!TextUtils.isEmpty(s.trim())) {
                     searchUsers(s);
-                }else{
-                    //search text empty  ,get all users
+                } else {
                     getAllUsers();
                 }
                 return false;
@@ -190,12 +187,24 @@ public class PeopleFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public boolean onOptionItemSelected(MenuItem item){
-        int id =item.getItemId();
-        if(id==R.id.logout) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
             firebaseAuth.signOut();
             checkUserStatus();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkUserStatus() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            if (isAdded() && getActivity() != null) {
+                startActivity(new Intent(getActivity(), SignInActivity.class));
+                getActivity().finish();
+            }
+        }
     }
 }

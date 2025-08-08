@@ -39,10 +39,18 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.firebase:firebase-auth:23.1.0")
-    implementation("com.google.firebase:firebase-database:21.0.0")
-    implementation("com.google.firebase:firebase-storage:21.0.1")
-    implementation("com.google.firebase:firebase-firestore:25.1.2")
+
+//
+    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
+    implementation("com.google.firebase:firebase-auth:24.0.0")
+    implementation("com.google.firebase:firebase-database:22.0.0")
+    implementation("com.google.firebase:firebase-storage:22.0.0")
+    implementation("com.google.firebase:firebase-firestore:26.0.0")
+//    implementation 'com.google.firebase:firebase-auth:23.1.0'
+//    implementation 'com.google.firebase:firebase-database:21.0.0'
+//    implementation 'com.google.firebase:firebase-storage:21.0.1'
+
 
 
 //    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
