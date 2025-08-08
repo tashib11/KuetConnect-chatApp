@@ -2,17 +2,17 @@ package echonest.sociogram.connectus.Models;
 
 public class ModelUser {
     // use same name as in firebase
-    String coverPhoto, profilePhoto,  email, password,search,userId,name,onlineStatus, profession, publicKey;
+    String coverPhoto, profilePhoto,  email, password,userID,name,onlineStatus, profession, publicKey;
     int followerCount;
     public ModelUser(){}
 
-    public ModelUser(String coverPhoto, String profilePhoto, String email, String password, String search, String userId, String name, String onlineStatus, String profession, int followerCount, String publicKey) {
+    public ModelUser(String coverPhoto, String profilePhoto, String email, String password, String userId, String name, String onlineStatus, String profession, int followerCount, String publicKey) {
         this.coverPhoto = coverPhoto;
         this.profilePhoto = profilePhoto;
         this.email = email;
         this.password = password;
-        this.search = search;
-        this.userId = userId;
+
+        this.userID = userId;
         this.name = name;
         this.onlineStatus = onlineStatus;
         this.profession= profession;
@@ -52,21 +52,15 @@ public class ModelUser {
         this.password = password;
     }
 
-    public String getSearch() {
-        return search;
-    }
 
-    public void setSearch(String search) {
-        this.search = search;
-    }
 
 
     public String getUserId() {
-        return userId;
+        return userID;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.userID = userId;
     }
 
     public String getName() {

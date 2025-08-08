@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGrey"
-    tools:context=".SignUpActivity">
+    tools:context="echonest.sociogram.connectus.SignUpActivity">
 
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -157,7 +157,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
       <com.google.android.material.textfield.TextInputEditText
-          android:id="@+id/profession"
+          android:id="@+id/professionET"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="#ddd"
